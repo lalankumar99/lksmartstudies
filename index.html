@@ -1013,7 +1013,9 @@
                 // Generate 10 dummy cards per category
                 for (let i = 1; i <= 10; i++) {
                     cardsHTML += `
-                        <a href="javascript:void(0)" class="update-card ripple" data-search="${cat.id.toLowerCase()} dummy update ${i}">
+                        <a href="${cat.id === 'Latest Updates' && i === 1 ? 'lnmu_ug_admission_2026_30.html' : 'javascript:void(0)'}"
+   class="update-card ripple"
+   data-search="${cat.id.toLowerCase()} dummy update ${i}">
                             <div>
                                 <div class="card-meta">
                                     <span class="badge">${cat.id}</span>
