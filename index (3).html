@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LK SMART STUDIES | Premium Education Portal</title>
+    
+    <!-- Google Fonts for Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Material Symbols (Icons) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+    <style>
+        /* ==========================================================================
+           CSS VARIABLES & THEMING
+           ========================================================================== */
+        :root {
+            --primary: #0F62FE;
+            --primary-hover: #0a4dcc;
+            --secondary: #00C853;
+            --secondary-hover: #00a344;
+            --accent: #FF6D00;
+            --accent-hover: #e66200;
+            --bg: #F5F7FA;
+            --surface: #FFFFFF;
+            --text-main: #1A1A1A;
+            --text-muted: #666666;
+            --border: #E5E7EB;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0F172A;
+            --surface: #1E293B;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #334155;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.4);
+            --glass-bg: rgba(30, 41, 59, 0.85);
+        }
+
+        /* ==========================================================================
+           RESET & BASE STYLES
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* ==========================================================================
+           UTILITIES
+           ========================================================================== */
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple-span {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* ==========================================================================
+           LOADING ANIMATION
+           ========================================================================== */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loader-text { margin-top: 15px; font-weight: 600; color: var(--primary); letter-spacing: 1px; }
+
+        /* ==========================================================================
+           HEADER & NAVIGATION
+           ========================================================================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            padding: 2px;
+            background: #fff;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-menu a {
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            background-color: var(--surface);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .icon-btn:hover {
+            background-color: var(--border);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        /* ==========================================================================
+           BREAKING NEWS TICKER
+           ========================================================================== */
+        .ticker-wrap {
+            background-color: var(--accent);
+            color: #fff;
+            padding: 8px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        
+        .ticker-label {
+            background: #fff;
+            color: var(--accent);
+            padding: 4px 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 15px;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .ticker-content {
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+            display: flex;
+            gap: 40px;
+        }
+
+        .ticker-wrap:hover .ticker-content {
+            animation-play-state: paused;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ==========================================================================
+           HERO SECTION
+           ========================================================================== */
+        .hero {
+            padding: 60px 0;
+            background: linear-gradient(135deg, rgba(15,98,254,0.05) 0%, rgba(0,200,83,0.05) 100%);
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 35px auto;
+            font-weight: 500;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-whatsapp { background-color: #25D366; }
+        .btn-whatsapp:hover { background-color: #128C7E; }
+        
+        .btn-youtube { background-color: #FF0000; }
+        .btn-youtube:hover { background-color: #CC0000; }
+        
+        .btn-telegram { background-color: #0088cc; }
+        .btn-telegram:hover { background-color: #006699; }
+
+        /* ==========================================================================
+           SEARCH & FILTER SECTION
+           ========================================================================== */
+        .search-section {
+            padding: 30px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            background: var(--surface);
+            border-radius: 50px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .search-box button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-box button:hover {
+            background: var(--primary-hover);
+        }
+
+        /* ==========================================================================
+           MAIN LAYOUT (CONTENT + SIDEBAR)
+           ========================================================================== */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            padding: 20px 0 60px 0;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Category Section Header */
+        .category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-title .material-symbols-outlined {
+            background: var(--primary);
+            color: #fff;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            font-size: 20px;
+        }
+
+        /* Update Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .update-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .update-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+        }
+
+        .badge {
+            background-color: rgba(15, 98, 254, 0.1);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .date {
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .date .material-symbols-outlined { font-size: 14px; }
+
+        .update-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            color: var(--text-main);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .read-more {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        
+        .update-card:hover .read-more {
+            gap: 10px;
+        }
+
+        .view-more-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            margin-top: 20px;
+            transition: var(--transition);
+        }
+
+        .view-more-btn:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        /* ==========================================================================
+           SIDEBAR
+           ========================================================================== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .sidebar-widget {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .widget-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .widget-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .widget-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .widget-list a {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--text-main);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .widget-list a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .widget-list a .material-symbols-outlined {
+            color: var(--primary);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Social Widget */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .social-btn {
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        .social-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* Stats Widget */
+        .stat-box {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+        }
+        .stat-number { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+
+        /* ==========================================================================
+           FOOTER
+           ========================================================================== */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 20px 0;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ==========================================================================
+           SCROLL TO TOP
+           ========================================================================== */
+        #scrollTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+        
+        #scrollTop.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        #scrollTop:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================================================
+           RESPONSIVE DESIGN (Media Queries)
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--surface);
+                padding: 20px;
+                border-bottom: 1px solid var(--border);
+                box-shadow: var(--shadow-md);
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: flex;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .ticker-content {
+                animation: ticker 15s linear infinite;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Animation -->
+    <div id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text">Loading LK Smart Studies...</div>
+    </div>
+
+    <!-- Breaking News Ticker -->
+    <div class="ticker-wrap">
+        <div class="container flex items-center">
+            <div class="ticker-label">BREAKING</div>
+            <div class="ticker-content" id="tickerContent">
+                <span>🔥 Result Declared for UP Board 2026! Check now.</span>
+                <span>🔥 New Sarkari Yojana Application Started.</span>
+                <span>🔥 Polytechnic Admissions Open - Apply Before Deadline!</span>
+                <span>🔥 SSC GD Constable Admit Card 2026 Released.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo-area">
+                <!-- Replace src with your actual logo file path when deploying -->
+                <img src="file_00000000e4207208a9419805e55705fb.png" alt="LK Smart Studies" class="logo-img" onerror="this.src='https://ui-avatars.com/api/?name=LK&background=0F62FE&color=fff&rounded=true&bold=true'">
+                <span class="brand-name">LK SMART STUDIES</span>
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="#">Home</a>
+                <a href="#Latest Updates">Updates</a>
+                <a href="#Latest Jobs">Jobs</a>
+                <a href="#Results">Results</a>
+                <a href="#Study Material">Study Material</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn ripple" id="themeToggle" title="Toggle Dark/Light Mode">
+                    <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
+                </button>
+                <button class="icon-btn mobile-menu-btn ripple" id="mobileMenuBtn">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to <span>LK SMART STUDIES</span></h1>
+            <p>Your premium portal for Latest Education Updates • Jobs • Results • Admissions • Polytechnic • Scholarship • Study Materials.</p>
+            
+            <div class="hero-buttons">
+                <a href="https://youtube.com/@lk_smart_studies?si=QMNRq22jYFrvHbkh" target="_blank" class="btn btn-youtube ripple">
+                    <span class="material-symbols-outlined">smart_display</span> Subscribe YouTube
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vb6EmbFAYlUH0JjeLj16" target="_blank" class="btn btn-whatsapp ripple">
+                    <span class="material-symbols-outlined">forum</span> Join WhatsApp
+                </a>
+                <a href="https://t.me/lksmartstudies" target="_blank" class="btn btn-telegram ripple">
+                    <span class="material-symbols-outlined">send</span> Join Telegram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Search -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search for jobs, results, updates...">
+                <button class="ripple" onclick="focusSearch()"><span class="material-symbols-outlined">search</span></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Layout -->
+    <main class="container main-layout">
+        
+        <!-- Dynamic Content Area -->
+        <div class="content-area" id="mainContentArea">
+            <!-- Categories and Cards will be injected here via JavaScript -->
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            
+            <!-- Widget: Social Connect -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title"><span class="material-symbols-outlined">share</span> Follow Us</h3>
+                <div class="social-grid">
+                    <a href="https://youtube.com/@lk_smart_studies?si=QMNRq22jYFrvHbkh" target="_blank" class="social-btn" style="background: #FF0000;">YouTube</a>
+                    <a href="https://whatsapp.com/channel/0029Vb6EmbFAYlUH0JjeLj16" target="_blank" class="social-btn" style="background: #25D366;">WhatsApp</a>
+                    <a href="https://t.me/lksmartstudies" target="_blank" class="social-btn" style="background: #0088cc;">Telegram</a>
+                    <a href="javascript:void(0)" class="social-btn" style="background: #1877F2;">Facebook</a>
+                </div>
+            </div>
+
+            <!-- Widget: Popular Updates -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title"><span class="material-symbols-outlined">local_fire_department</span> Trending Now</h3>
+                <div class="widget-list">
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">arrow_right</span> UP Police Constable Admit Card 2026</a>
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">arrow_right</span> SSC CGL Notification Out</a>
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">arrow_right</span> Polytechnic Entrance Exam Syllabus</a>
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">arrow_right</span> PM Scholarship Scheme 2026</a>
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">arrow_right</span> B.Ed Joint Entrance Exam Results</a>
+                </div>
+            </div>
+
+            <!-- Widget: Quick Links -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title"><span class="material-symbols-outlined">link</span> Quick Links</h3>
+                <div class="widget-list">
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">open_in_new</span> Official Web Portals</a>
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">open_in_new</span> Download Blank Forms</a>
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">open_in_new</span> Exam Calendar 2026-27</a>
+                    <a href="javascript:void(0)"><span class="material-symbols-outlined">open_in_new</span> Free Mock Tests</a>
+                </div>
+            </div>
+
+            <!-- Widget: Visitor Stats -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title"><span class="material-symbols-outlined">monitoring</span> Live Stats</h3>
+                <div class="stat-box">
+                    <div class="stat-number">142,853</div>
+                    <div class="stat-label">Total Visitors</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">1,204</div>
+                    <div class="stat-label">Online Now</div>
+                </div>
+            </div>
+
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <a href="#" class="logo-area" style="margin-bottom: 15px;">
+                    <img src="file_00000000e4207208a9419805e55705fb.png" alt="Logo" style="width:40px; height:40px; border-radius:50%; border:2px solid var(--primary); background:#fff;" onerror="this.src='https://ui-avatars.com/api/?name=LK&background=0F62FE&color=fff&rounded=true&bold=true'">
+                    <span class="brand-name" style="font-size: 1.2rem;">LK SMART STUDIES</span>
+                </a>
+                <p>LK Smart Studies is India's premium education portal providing fastest updates on Jobs, Results, Admit Cards, Admissions, and Scholarship Schemes.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <div class="footer-links">
+                    <a href="javascript:void(0)">About Us</a>
+                    <a href="javascript:void(0)">Contact Us</a>
+                    <a href="javascript:void(0)">Privacy Policy</a>
+                    <a href="javascript:void(0)">Terms of Service</a>
+                    <a href="javascript:void(0)">Disclaimer</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Categories</h4>
+                <div class="footer-links">
+                    <a href="#Latest Jobs">Latest Jobs</a>
+                    <a href="#Results">Results</a>
+                    <a href="#Admit Card">Admit Cards</a>
+                    <a href="#Sarkari Yojana">Sarkari Yojana</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p><span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">mail</span> support@lksmartstudies.com</p>
+                <p><span class="material-symbols-outlined" style="font-size: 16px; vertical-align: middle;">location_on</span> New Delhi, India</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 LK SMART STUDIES. All Rights Reserved. Designed for Premium Education.
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTop" class="ripple" title="Go to top">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+
+    <!-- ==========================================================================
+         JAVASCRIPT LOGIC
+         ========================================================================== -->
+    <script>
+        // --- 1. Data Configuration for the 22 Categories ---
+        // This array makes it extremely easy to add, remove, or modify categories later.
+        const categoriesData = [
+            { id: "Latest Updates", icon: "update" },
+            { id: "Latest Jobs", icon: "work" },
+            { id: "Admit Card", icon: "badge" },
+            { id: "Results", icon: "emoji_events" },
+            { id: "Admissions", icon: "school" },
+            { id: "Scholarships", icon: "monetization_on" },
+            { id: "Sarkari Yojana", icon: "account_balance" },
+            { id: "Polytechnic", icon: "architecture" },
+            { id: "University Updates", icon: "account_balance" },
+            { id: "Study Material", icon: "menu_book" },
+            { id: "Syllabus", icon: "assignment" },
+            { id: "Answer Key", icon: "fact_check" },
+            { id: "Important Notice", icon: "campaign" },
+            { id: "Exam Calendar", icon: "calendar_month" },
+            { id: "Downloads", icon: "download" },
+            { id: "Trending News", icon: "trending_up" },
+            { id: "Government Jobs", icon: "assured_workload" },
+            { id: "Private Jobs", icon: "business_center" },
+            { id: "Entrance Exams", icon: "draw" },
+            { id: "Diploma Updates", icon: "workspace_premium" },
+            { id: "Engineering Updates", icon: "engineering" },
+            { id: "Important Links", icon: "link" }
+        ];
+
+        // --- 2. Dynamic Content Generation ---
+        // Generates the 22 sections, each containing 10 dummy cards.
+        function generateContent() {
+            const container = document.getElementById('mainContentArea');
+            let fullHTML = '';
+            
+            // Get current date for realistic dummy data
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+            categoriesData.forEach(cat => {
+                let cardsHTML = '';
+                // Generate 10 dummy cards per category
+                for (let i = 1; i <= 10; i++) {
+                    cardsHTML += `
+                        <a href="javascript:void(0)" class="update-card ripple" data-search="${cat.id.toLowerCase()} dummy update ${i}">
+                            <div>
+                                <div class="card-meta">
+                                    <span class="badge">${cat.id}</span>
+                                    <span class="date"><span class="material-symbols-outlined">calendar_today</span> ${dateStr}</span>
+                                </div>
+                                <h3>LK Smart Studies: Important Notification and Update ${i} regarding ${cat.id} 2026.</h3>
+                            </div>
+                            <div class="read-more">Read Details <span class="material-symbols-outlined">arrow_forward</span></div>
+                        </a>
+                    `;
+                }
+
+                // Wrap cards in a category section
+                const sectionHTML = `
+                    <section id="${cat.id}" class="category-section">
+                        <div class="category-header">
+                            <h2 class="category-title">
+                                <span class="material-symbols-outlined">${cat.icon}</span> ${cat.id}
+                            </h2>
+                        </div>
+                        <div class="cards-grid">
+                            ${cardsHTML}
+                        </div>
+                        <a href="javascript:void(0)" class="view-more-btn ripple">View All ${cat.id}</a>
+                    </section>
+                `;
+                fullHTML += sectionHTML;
+            });
+
+            container.innerHTML = fullHTML;
+        }
+
+        // --- 3. Live Search Functionality ---
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('keyup', function(e) {
+                const term = e.target.value.toLowerCase();
+                const cards = document.querySelectorAll('.update-card');
+                const sections = document.querySelectorAll('.category-section');
+
+                // Filter cards
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    if (text.includes(term)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Hide empty sections
+                sections.forEach(section => {
+                    const visibleCards = section.querySelectorAll('.update-card[style="display: flex;"], .update-card:not([style*="display: none"])');
+                    if (visibleCards.length === 0 && term !== '') {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = 'block';
+                    }
+                });
+            });
+        }
+        function focusSearch() { document.getElementById('searchInput').focus(); }
+
+        // --- 4. Dark/Light Mode Toggle ---
+        function initializeTheme() {
+            const toggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const htmlTag = document.documentElement;
+            
+            // Check local storage for preference
+            const savedTheme = localStorage.getItem('lk_theme') || 'light';
+            htmlTag.setAttribute('data-theme', savedTheme);
+            themeIcon.textContent = savedTheme === 'dark' ? 'light_mode' : 'dark_mode';
+
+            toggleBtn.addEventListener('click', () => {
+                const currentTheme = htmlTag.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                htmlTag.setAttribute('data-theme', newTheme);
+                localStorage.setItem('lk_theme', newTheme);
+                themeIcon.textContent = newTheme === 'dark' ? 'light_mode' : 'dark_mode';
+            });
+        }
+
+        // --- 5. Mobile Menu Toggle ---
+        function initializeMobileMenu() {
+            const btn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('navMenu');
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('active');
+            });
+            // Close menu on click outside
+            document.addEventListener('click', (e) => {
+                if(!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove('active');
+                }
+            });
+        }
+
+        // --- 6. Scroll to Top Button ---
+        function initializeScrollTop() {
+            const btn = document.getElementById('scrollTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) {
+                    btn.classList.add('show');
+                } else {
+                    btn.classList.remove('show');
+                }
+            });
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // --- 7. Ripple Effect for Buttons ---
+        function initializeRipple() {
+            document.addEventListener('click', function(e) {
+                const target = e.target.closest('.ripple');
+                if (!target) return;
+
+                const circle = document.createElement('span');
+                const diameter = Math.max(target.clientWidth, target.clientHeight);
+                const radius = diameter / 2;
+
+                const rect = target.getBoundingClientRect();
+                
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${e.clientX - rect.left - radius}px`;
+                circle.style.top = `${e.clientY - rect.top - radius}px`;
+                circle.classList.add('ripple-span');
+
+                // Remove existing ripples
+                const existing = target.querySelector('.ripple-span');
+                if(existing) { existing.remove(); }
+
+                target.appendChild(circle);
+
+                setTimeout(() => {
+                    circle.remove();
+                }, 600);
+            });
+        }
+
+        // --- 8. Initialization on Load ---
+        window.onload = function() {
+            // Generate DOM Content
+            generateContent();
+            
+            // Initialize Interactions
+            initializeSearch();
+            initializeTheme();
+            initializeMobileMenu();
+            initializeScrollTop();
+            initializeRipple();
+
+            // Hide Loader smoothly
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }, 500); // 500ms delay to ensure smooth paint
+        };
+    </script>
+</body>
+</html>
