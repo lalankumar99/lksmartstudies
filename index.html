@@ -1021,7 +1021,11 @@
                                     <span class="badge">${cat.id}</span>
                                     <span class="date"><span class="material-symbols-outlined">calendar_today</span> ${dateStr}</span>
                                 </div>
-                                <h3>LK Smart Studies: Important Notification and Update ${i} regarding ${cat.id} 2026.</h3>
+                                <h3>
+${cat.id === 'Latest Updates' && i === 1
+? 'LNMU UG Admission 2026–30: Online Apply, Eligibility, Fees, Important Dates & Merit List'
+: `LK Smart Studies: Important Notification and Update ${i} regarding ${cat.id} 2026.`}
+</h3>
                             </div>
                             <div class="read-more">Read Details <span class="material-symbols-outlined">arrow_forward</span></div>
                         </a>
